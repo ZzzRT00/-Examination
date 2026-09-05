@@ -1,4 +1,21 @@
 package com.xhj.examination.service.impl;
 
-public class UserServiceImpl {
+import com.xhj.examination.entity.User;
+import com.xhj.examination.mapper.UserMapper;
+import com.xhj.examination.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Override
+    public List<User> selectAll() {
+        return userMapper.selectAll();
+    }
 }
