@@ -14,3 +14,7 @@ mybatis:
 
 server:
   port: 3728
+
+
+knife4j:
+  enable: true

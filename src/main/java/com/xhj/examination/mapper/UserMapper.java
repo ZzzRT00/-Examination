@@ -10,4 +10,10 @@ import java.util.List;
 public interface UserMapper {
     //查询全部用户
     List<User> selectAll();
+
+    User selectByName(String name);
+
+    void insert(User user);
+
+    void update(User user);
 }

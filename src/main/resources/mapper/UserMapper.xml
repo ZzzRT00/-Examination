@@ -2,8 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xhj.examination.mapper.UserMapper">
+    <insert id="insert">
+        insert into user(name,password,number,phone,college,identity,sex)
+        values (#{name}, #{password}, #{number}, #{phone}, #{college}, #{identity}, #{sex})
+    </insert>
+    <update id="update">
+        update user
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="number != null and number != ''">number = #{number},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="college != null and college != ''">college = #{college},</if>
+            <if test="identity != null and identity != ''">identity = #{identity},</if>
+            <if test="sex != null and sex != ''">sex = #{sex}</if>
+        </set>
+        where id = #{id}
+    </update>
 
     <select id="selectAll" resultType="com.xhj.examination.entity.User">
         select * from user
+    </select>
+    <select id="selectByName" resultType="com.xhj.examination.entity.User">
+        select * from user
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+        order by number asc
     </select>
 </mapper>

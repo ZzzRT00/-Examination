@@ -18,4 +18,20 @@ public class UserServiceImpl implements UserService {
     public List<User> selectAll() {
         return userMapper.selectAll();
     }
+
+
+    @Override
+    public User selectByName(String name) {
+        return userMapper.selectByName(name);
+    }
+
+    @Override
+    public void add(User user) {
+        userMapper.insert(user);
+    }
+
+    @Override
+    public void update(User user) {
+        userMapper.update(user);
+    }
 }
