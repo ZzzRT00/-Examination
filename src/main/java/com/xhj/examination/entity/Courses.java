@@ -7,5 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class Courses {
     private long id;
-    private String course_name;
+    private String courseName;
+    private long teacherId;
 }

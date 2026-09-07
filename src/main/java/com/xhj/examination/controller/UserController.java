@@ -21,6 +21,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping("/login")
+    @Operation(summary = "用户登录")
+    public Object login(@RequestBody User user){
+        User loginUser = userService.login(user);
+        if(loginUser == null){
+            return "账号密码或者身份错误";
+        }
+        loginUser.setPassword(null);
+        return loginUser;
+    }
+
     @GetMapping("/list")
     @Operation(summary="查询所有用户")
     public Result<List<User>> list(){
@@ -51,4 +62,10 @@ public class UserController {
         return Result.success();
     }
 
+    @DeleteMapping("/{id}")
+    @Operation(summary = "删除用户")
+    public Result<Void> delete(@PathVariable Integer id){
+        userService.deleteById(id);
+        return Result.success();
+    }
 }

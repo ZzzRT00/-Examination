@@ -19,6 +19,9 @@
         </set>
         where id = #{id}
     </update>
+    <delete id="deleteById">
+        delete from user where id = #{id}
+    </delete>
 
     <select id="selectAll" resultType="com.xhj.examination.entity.User">
         select * from user
@@ -31,5 +34,12 @@
             </if>
         </where>
         order by number asc
+    </select>
+    <select id="findUserByLoginInfo" resultType="com.xhj.examination.entity.User">
+        SELECT id,identity,name,sex,phone,number,college,password
+        FROM user
+        WHERE number = #{number}
+          AND password = #{password}
+          AND identity = #{identity}
     </select>
 </mapper>

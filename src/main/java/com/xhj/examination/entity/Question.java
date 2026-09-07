@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 public class Question {
     private long id;
     private long course_id;
+    private String title;
     private String A;
     private String B;
     private String C;

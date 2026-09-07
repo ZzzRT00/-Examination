@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhj.examination.mapper.PaperMapper">
+
+    <select id="selectAll" resultType="com.xhj.examination.entity.Paper">
+        select * from paper
+    </select>
+
+    <select id="selectById" resultType="com.xhj.examination.entity.Paper">
+        select * from paper where id = #{id}
+    </select>
+
+</mapper>
