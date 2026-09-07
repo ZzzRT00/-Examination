@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhj.examination.mapper.QuestionMapper">
+    <select id="getQuestionByCourseId" resultType="com.xhj.examination.entity.Question">
+        SELECT id,course_id,title,a,b,c,d,answer
+        FROM question
+        WHERE course_id = #{courseId}
+    </select>
+
+    <insert id="addQuestion">
+        INSERT INTO question(course_id,title,a,b,c,d,answer)
+        VALUES(#{courseId},#{title},#{a},#{b},#{c},#{d},#{answer})
+    </insert>
+
+</mapper>

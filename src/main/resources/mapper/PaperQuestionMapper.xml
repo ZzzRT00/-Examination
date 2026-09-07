@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhj.examination.mapper.PaperQuestionMapper">
+
+    <insert id="addPaperQuestion">
+        INSERT INTO paper_question(paper_id,question_id,score)
+        VALUES(#{paperId},#{questionId},#{score})
+    </insert>
+
+    <select id="listByPaperId" resultType="com.xhj.examination.entity.PaperQuestion">
+        SELECT id,paper_id,question_id,score
+        FROM paper_question
+        WHERE paper_id = #{paperId}
+    </select>
+
+</mapper>
