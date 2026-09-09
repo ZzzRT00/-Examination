@@ -13,5 +13,20 @@
         FROM paper_question
         WHERE paper_id = #{paperId}
     </select>
-
+    <select id="selectByPaperId" resultType="com.xhj.examination.entity.PaperQuestionVO">
+        SELECT
+            pq.id,
+            pq.paper_id AS paperId,
+            pq.question_id AS questionId,
+            pq.score,
+            q.title,
+            q.A AS optionA,
+            q.B AS optionB,
+            q.C AS optionC,
+            q.D AS optionD,
+            q.answer
+        FROM paper_question pq
+                 LEFT JOIN question q ON pq.question_id = q.id
+        WHERE pq.paper_id = #{paperId}
+    </select>
 </mapper>

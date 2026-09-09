@@ -1,6 +1,8 @@
 package com.xhj.examination.controller;
 
+import com.xhj.examination.common.Result;
 import com.xhj.examination.entity.PaperQuestion;
+import com.xhj.examination.entity.PaperQuestionVO;
 import com.xhj.examination.service.PaperQuestionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/paperQuestion")
-@Tag(name = "试卷题目接口")
+@Tag(name = "试卷题目相关接口")
 public class PaperQuestionController {
 
     @Autowired
@@ -29,5 +31,12 @@ public class PaperQuestionController {
     @Operation(summary = "查看试卷题目")
     public List<PaperQuestion> list(@PathVariable Long paperId){
         return paperQuestionService.getByPaperId(paperId);
+    }
+
+    @GetMapping("/paper/{paperId}")
+    @Operation(summary = "显示试卷题目")
+    public Result<List<PaperQuestionVO>> getPaperQuestion(@PathVariable Long paperId){
+        List<PaperQuestionVO> list = paperQuestionService.getQuestionByPaperId(paperId);
+        return Result.success(list);
     }
 }
