@@ -10,4 +10,10 @@ public interface QuestionMapper {
     List<Question> getQuestionByCourseId(Long courseId);
 
     int addQuestion(Question question);
+
+    List<Question> selectByIds(List<Integer> questionIdList);
+
+    int updateQuestion(Question question);
+
+    int deleteQuestion(Integer id);
 }

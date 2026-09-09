@@ -7,10 +7,34 @@
         FROM question
         WHERE course_id = #{courseId}
     </select>
+    <select id="selectByIds" resultType="com.xhj.examination.entity.Question">
+        SELECT * FROM question
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
     <insert id="addQuestion">
         INSERT INTO question(course_id,title,a,b,c,d,answer)
         VALUES(#{courseId},#{title},#{a},#{b},#{c},#{d},#{answer})
     </insert>
 
+    <update id="updateQuestion" parameterType="com.xhj.examination.entity.Question">
+        UPDATE question
+        SET
+            content = #{content},
+            option_a = #{optionA},
+            option_b = #{optionB},
+            option_c = #{optionC},
+            option_d = #{optionD},
+            answer = #{answer},
+            score = #{score},
+            course_id = #{courseId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteQuestion" parameterType="int">
+        DELETE FROM question WHERE id = #{id}
+    </delete>
 </mapper>

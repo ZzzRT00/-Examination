@@ -16,7 +16,7 @@ public class CoursesServiceImpl implements CoursesService {
     private CoursesMapper coursesMapper;
 
     @Override
-    public List<Courses> getTeacherCourseList(Long teacherId) {
-        return coursesMapper.getCourseByTeacherId(teacherId);
+    public List<Courses> getCoursesByUserId(Long userId) {
+        return coursesMapper.getCoursesByUserId(userId);
     }
 }

@@ -14,4 +14,6 @@ public interface PaperQuestionMapper {
     List<PaperQuestion> listByPaperId(Long paperId);
 
     List<PaperQuestionVO> selectByPaperId(Long paperId);
+
+    List<PaperQuestionVO> selectQuestionWithScoreByPaperId(Long paperId);
 }

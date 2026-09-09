@@ -29,4 +29,13 @@
                  LEFT JOIN question q ON pq.question_id = q.id
         WHERE pq.paper_id = #{paperId}
     </select>
+    <select id="selectQuestionWithScoreByPaperId" resultType="com.xhj.examination.entity.PaperQuestionVO">
+        SELECT
+            q.id AS question_id,
+            q.answer,
+            pq.score
+        FROM paper_question pq
+                 LEFT JOIN question q ON pq.question_id = q.id
+        WHERE pq.paper_id = #{paperId}
+    </select>
 </mapper>

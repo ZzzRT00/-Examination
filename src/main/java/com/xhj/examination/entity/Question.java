@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 public class Question {
-    private long id;
-    private long courseId;
+    private Long id;
+    private Long courseId;
     private String title;
     private String a;
     private String b;

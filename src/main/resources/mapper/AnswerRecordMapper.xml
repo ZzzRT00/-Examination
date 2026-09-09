@@ -17,4 +17,44 @@
         SELECT id,user_id,paper_id,total_score,user_score,create_time
         FROM answer_record WHERE paper_id = #{paperId}
     </select>
+
+    <select id="getCourseScoreList" resultType="com.xhj.examination.entity.ScoreVO">
+        SELECT
+            u.id AS userId,
+            u.name AS userName,
+            u.number AS studentNo,
+            p.id AS paperId,
+            p.paper_name AS paperName,
+            c.id AS courseId,
+            c.course_name AS courseName,
+            ar.user_score AS userScore,
+            ar.total_score AS totalScore,
+            ar.create_time AS examTime
+        FROM answer_record ar
+                 LEFT JOIN user u ON ar.user_id = u.id
+                 LEFT JOIN paper p ON ar.paper_id = p.id
+                 LEFT JOIN courses c ON p.course_id = c.id
+        WHERE c.id = #{courseId}
+        ORDER BY ar.create_time DESC
+    </select>
+
+    <select id="getStudentCourseScore" resultType="com.xhj.examination.entity.ScoreVO">
+        SELECT
+            u.id AS userId,
+            u.name AS userName,
+            u.number AS studentNo,
+            p.id AS paperId,
+            p.paper_name AS paperName,
+            c.id AS courseId,
+            c.course_name AS courseName,
+            ar.user_score AS userScore,
+            ar.total_score AS totalScore,
+            ar.create_time AS examTime
+        FROM answer_record ar
+                 LEFT JOIN user u ON ar.user_id = u.id
+                 LEFT JOIN paper p ON ar.paper_id = p.id
+                 LEFT JOIN courses c ON p.course_id = c.id
+        WHERE ar.user_id = #{userId} AND c.id = #{courseId}
+        ORDER BY ar.create_time DESC
+    </select>
 </mapper>

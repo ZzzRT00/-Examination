@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class PaperQuestionVO {
-    private Long id;
     private Long paperId;
     private Long questionId;
     private Integer score;

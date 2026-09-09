@@ -23,13 +23,13 @@ public class UserController {
 
     @PostMapping("/login")
     @Operation(summary = "用户登录")
-    public Object login(@RequestBody User user){
+    public Result<User> login(@RequestBody User user){
         User loginUser = userService.login(user);
         if(loginUser == null){
-            return "账号密码或者身份错误";
+            return Result.fail(200,"账号密码或身份错误");
         }
         loginUser.setPassword(null);
-        return loginUser;
+        return Result.success(loginUser);
     }
 
     @GetMapping("/list")

@@ -7,5 +7,5 @@ import java.util.List;
 
 @Mapper
 public interface CoursesMapper {
-    List<Courses> getCourseByTeacherId(Long teacherId);
+    List<Courses> getCoursesByUserId(Long userId);
 }

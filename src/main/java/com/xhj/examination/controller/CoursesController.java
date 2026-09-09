@@ -1,6 +1,7 @@
 package com.xhj.examination.controller;
 
 
+import com.xhj.examination.common.Result;
 import com.xhj.examination.entity.Courses;
 import com.xhj.examination.service.CoursesService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,9 +22,10 @@ public class CoursesController {
     @Autowired
     private CoursesService coursesService;
 
-    @GetMapping("/teacher/{teacherId}")
-    @Operation(summary = "查询教师课程")
-    public List<Courses> getTeacherCourse(@PathVariable Long teacherId){
-        return coursesService.getTeacherCourseList(teacherId);
+    @GetMapping("/myCourses/{userId}")
+    @Operation(summary = "查询用户课程")
+    public Result<List<Courses>> getMyCourses(@PathVariable Long userId) {
+        List<Courses> list = coursesService.getCoursesByUserId(userId);
+        return Result.success(list);
     }
 }

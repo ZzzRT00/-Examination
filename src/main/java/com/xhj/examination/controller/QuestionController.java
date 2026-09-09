@@ -1,5 +1,6 @@
 package com.xhj.examination.controller;
 
+import com.xhj.examination.common.Result;
 import com.xhj.examination.entity.Question;
 import com.xhj.examination.service.QuestionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,5 +34,17 @@ public class QuestionController {
         }else{
             return "新增失败";
         }
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "修改题目")
+    public Result updateQuestion(@RequestBody Question question) {
+        return questionService.updateQuestion(question);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "删除题目")
+    public Result deleteQuestion(@PathVariable Integer id) {
+        return questionService.deleteQuestion(id);
     }
 }

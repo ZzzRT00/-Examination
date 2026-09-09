@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xhj.examination.mapper.CoursesMapper">
-    <select id="getCourseByTeacherId" resultType="com.xhj.examination.entity.Courses">
-        SELECT id,course_name,teacher_id
-        FROM courses
-        WHERE teacher_id = #{teacherId}
+    <select id="getCoursesByUserId" resultType="com.xhj.examination.entity.Courses">
+        SELECT c.*
+        FROM user_course uc
+                 LEFT JOIN courses c ON uc.course_id = c.id
+        WHERE uc.user_id = #{userId}
     </select>
 </mapper>
