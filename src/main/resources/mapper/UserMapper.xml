@@ -35,11 +35,17 @@
         </where>
         order by number asc
     </select>
+    <select id="selectByNumber" resultType="com.xhj.examination.entity.User">
+        select * from user where number = #{number}
+    </select>
     <select id="findUserByLoginInfo" resultType="com.xhj.examination.entity.User">
         SELECT id,identity,name,sex,phone,number,college,password
         FROM user
         WHERE number = #{number}
           AND password = #{password}
           AND identity = #{identity}
+    </select>
+    <select id="selectById" resultType="com.xhj.examination.entity.User">
+        select * from user where id=#{id}
     </select>
 </mapper>

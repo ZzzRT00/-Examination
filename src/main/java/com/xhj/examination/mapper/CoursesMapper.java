@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface CoursesMapper {
     List<Courses> getCoursesByUserId(Long userId);
+
+    List<Courses> getCoursesByTeacherId(Long teacherId);
 }

@@ -13,6 +13,8 @@ public interface UserMapper {
 
     User selectByName(String name);
 
+    User selectByNumber(String number);
+
     void insert(User user);
 
     void update(User user);
@@ -20,4 +22,6 @@ public interface UserMapper {
     void deleteById(Integer id);
 
     User findUserByLoginInfo(User user);
+
+    User selectById(Long userId);
 }

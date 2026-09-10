@@ -1,5 +1,6 @@
 package com.xhj.examination.service.impl;
 
+import com.xhj.examination.common.Result;
 import com.xhj.examination.entity.Paper;
 import com.xhj.examination.mapper.PaperMapper;
 import com.xhj.examination.service.PaperService;
@@ -19,7 +20,13 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public Paper selectById(Integer id) {
+    public Paper selectById(Long id) {
         return paperMapper.selectById(id);
+    }
+
+    @Override
+    public Result<List<Paper>> getPaperListByCourseId(Long courseId) {
+        List<Paper> list = paperMapper.getPaperListByCourseId(courseId);
+        return Result.success(list);
     }
 }

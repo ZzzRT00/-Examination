@@ -2,6 +2,7 @@ package com.xhj.examination.mapper;
 
 import com.xhj.examination.entity.PaperQuestion;
 import com.xhj.examination.entity.PaperQuestionVO;
+import com.xhj.examination.entity.StudentPaperQuestionVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,4 +17,6 @@ public interface PaperQuestionMapper {
     List<PaperQuestionVO> selectByPaperId(Long paperId);
 
     List<PaperQuestionVO> selectQuestionWithScoreByPaperId(Long paperId);
+
+    List<StudentPaperQuestionVO> listStudentQuestionsByPaperId(Long paperId);
 }

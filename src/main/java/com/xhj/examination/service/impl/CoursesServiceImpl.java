@@ -6,7 +6,6 @@ import com.xhj.examination.service.CoursesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.KeySelector;
 import java.util.List;
 
 @Service
@@ -18,5 +17,10 @@ public class CoursesServiceImpl implements CoursesService {
     @Override
     public List<Courses> getCoursesByUserId(Long userId) {
         return coursesMapper.getCoursesByUserId(userId);
+    }
+
+    @Override
+    public List<Courses> getCoursesByTeacherId(Long teacherId) {
+        return coursesMapper.getCoursesByTeacherId(teacherId);
     }
 }

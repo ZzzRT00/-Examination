@@ -4,6 +4,7 @@ import com.xhj.examination.entity.User;
 import com.xhj.examination.mapper.UserMapper;
 import com.xhj.examination.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> selectAll() {
@@ -27,11 +31,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void add(User user) {
+        if (user.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userMapper.insert(user);
     }
 
     @Override
     public void update(User user) {
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userMapper.update(user);
     }
 
@@ -42,6 +52,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(User user) {
-        return userMapper.findUserByLoginInfo(user);
+        User dbUser = userMapper.selectByNumber(user.getNumber());
+        if (dbUser == null) {
+            return null;
+        }
+        if (passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
+            return dbUser;
+        }
+        return null;
+    }
+
+    @Override
+    public User getById(Long userId) {
+        return userMapper.selectById(userId);
     }
 }

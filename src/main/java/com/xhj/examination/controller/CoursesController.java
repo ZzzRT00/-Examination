@@ -22,10 +22,17 @@ public class CoursesController {
     @Autowired
     private CoursesService coursesService;
 
-    @GetMapping("/myCourses/{userId}")
-    @Operation(summary = "查询用户课程")
+    @GetMapping("/student/myCourses/{userId}")
+    @Operation(summary = "查询学生所选课程")
     public Result<List<Courses>> getMyCourses(@PathVariable Long userId) {
         List<Courses> list = coursesService.getCoursesByUserId(userId);
+        return Result.success(list);
+    }
+
+    @GetMapping("/teacher/myCourses/{teacherId}")
+    @Operation(summary = "查询教师所教课程")
+    public Result<List<Courses>> getTeacherCourses(@PathVariable Long teacherId) {
+        List<Courses> list = coursesService.getCoursesByTeacherId(teacherId);
         return Result.success(list);
     }
 }

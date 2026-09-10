@@ -1,17 +1,14 @@
 package com.xhj.examination.service.impl;
 
 import com.xhj.examination.entity.*;
-import com.xhj.examination.mapper.PaperQuestionMapper;
-import com.xhj.examination.mapper.QuestionMapper;
-import com.xhj.examination.service.AnswerRecordService;
 import com.xhj.examination.mapper.AnswerRecordMapper;
+import com.xhj.examination.mapper.PaperMapper;
+import com.xhj.examination.mapper.PaperQuestionMapper;
 import com.xhj.examination.service.AnswerRecordService;
-import com.xhj.examination.service.PaperQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -26,9 +23,7 @@ public class AnswerRecordServiceImpl implements AnswerRecordService {
     @Autowired
     private PaperQuestionMapper paperQuestionMapper;
     @Autowired
-    private QuestionMapper questionMapper;
-    @Autowired
-    private PaperQuestionService paperQuestionService;
+    private PaperMapper paperMapper;
 
     @Override
     public int submitExam(AnswerRecord answerRecord) {
@@ -87,6 +82,17 @@ public class AnswerRecordServiceImpl implements AnswerRecordService {
         Long paperId = submitExamVO.getPaperId();
         Long userId = submitExamVO.getUserId();
 
+        // ========== 防重复提交：该课程已考过且非重考，则拒绝 ==========
+        Paper paper = paperMapper.selectById(paperId);
+        if (paper != null && paper.getCourseId() != null) {
+            Long courseId = paper.getCourseId();
+            ScoreVO existing = answerRecordMapper.getLatestStudentCourseScore(userId, courseId);
+            boolean isRetake = Boolean.TRUE.equals(submitExamVO.getRetake());
+            if (existing != null && !isRetake) {
+                throw new IllegalStateException("该课程已参加过考试，如需重新考试请点击重考");
+            }
+        }
+
         List<PaperQuestionVO> paperQuestionVOList = paperQuestionMapper.selectQuestionWithScoreByPaperId(paperId);
         if (paperQuestionVOList.isEmpty()) {
             return 0;
@@ -134,5 +140,10 @@ public class AnswerRecordServiceImpl implements AnswerRecordService {
     @Override
     public List<ScoreVO> getStudentCourseScore(Long userId, Long courseId) {
         return answerRecordMapper.getStudentCourseScore(userId, courseId);
+    }
+
+    @Override
+    public ScoreVO getLatestStudentCourseScore(Long userId, Long courseId) {
+        return answerRecordMapper.getLatestStudentCourseScore(userId, courseId);
     }
 }

@@ -38,4 +38,19 @@
                  LEFT JOIN question q ON pq.question_id = q.id
         WHERE pq.paper_id = #{paperId}
     </select>
+
+    <select id="listStudentQuestionsByPaperId" resultType="com.xhj.examination.entity.StudentPaperQuestionVO">
+        SELECT
+            pq.question_id AS questionId,
+            q.title,
+            q.a AS optionA,
+            q.b AS optionB,
+            q.c AS optionC,
+            q.d AS optionD,
+            pq.score
+        FROM paper_question pq
+                 LEFT JOIN question q ON pq.question_id = q.id
+        WHERE pq.paper_id = #{paperId}
+        ORDER BY pq.id ASC
+    </select>
 </mapper>

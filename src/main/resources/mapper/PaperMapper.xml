@@ -11,4 +11,15 @@
         select * from paper where id = #{id}
     </select>
 
+    <select id="getPaperListByCourseId" resultType="com.xhj.examination.entity.Paper">
+        SELECT
+            id,
+            paper_name AS paperName,
+            total_score AS totalScore,
+            duration,
+            course_id AS courseId
+        FROM paper
+        WHERE course_id = #{courseId}
+    </select>
+
 </mapper>

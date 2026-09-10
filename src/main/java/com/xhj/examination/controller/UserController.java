@@ -1,17 +1,18 @@
 package com.xhj.examination.controller;
 
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.xhj.examination.common.Result;
 import com.xhj.examination.entity.User;
 import com.xhj.examination.service.UserService;
+import com.xhj.examination.utils.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.catalina.WebResourceRoot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -23,13 +24,18 @@ public class UserController {
 
     @PostMapping("/login")
     @Operation(summary = "用户登录")
-    public Result<User> login(@RequestBody User user){
+    public Result<Map<String,Object>> login(@RequestBody User user){
         User loginUser = userService.login(user);
         if(loginUser == null){
-            return Result.fail(200,"账号密码或身份错误");
+            return Result.fail(401,"账号密码或身份错误");
         }
+        String token = JwtUtil.createToken(loginUser.getId(), loginUser.getIdentity());
         loginUser.setPassword(null);
-        return Result.success(loginUser);
+
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("userInfo", loginUser);
+        resultMap.put("token", token);
+        return Result.success(resultMap);
     }
 
     @GetMapping("/list")
@@ -41,9 +47,22 @@ public class UserController {
 
 
     @GetMapping("/find")
-    @Operation(summary = "查询指定用户")
+    @Operation(summary = "根据姓名查询用户")
     public Result<User> selectUserByName(@RequestParam String name) {
         User user = userService.selectByName(name);
+        if (user != null) {
+            user.setPassword(null);
+        }
+        return Result.success(user);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "根据ID查询用户信息")
+    public Result<User> getById(@PathVariable Long id) {
+        User user = userService.getById(id);
+        if (user != null) {
+            user.setPassword(null);
+        }
         return Result.success(user);
     }
 
@@ -55,7 +74,7 @@ public class UserController {
         return Result.success();
     }
 
-    @PutMapping
+    @PutMapping("/student")
     @Operation(summary = "修改用户信息")
     public Result<Void> update(@RequestBody User user){
         userService.update(user);

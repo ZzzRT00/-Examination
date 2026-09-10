@@ -16,4 +16,6 @@ public interface UserService {
     void deleteById(Integer id);
 
     User login(User user);
+
+    User getById(Long userId);
 }

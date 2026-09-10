@@ -9,5 +9,8 @@ import java.util.List;
 public interface PaperMapper {
 
     List<Paper> selectAll();
-    Paper selectById(Integer id);
+
+    Paper selectById(Long id);
+
+    List<Paper> getPaperListByCourseId(Long courseId);
 }

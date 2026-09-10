@@ -8,4 +8,10 @@
                  LEFT JOIN courses c ON uc.course_id = c.id
         WHERE uc.user_id = #{userId}
     </select>
+
+    <select id="getCoursesByTeacherId" resultType="com.xhj.examination.entity.Courses">
+        SELECT id, course_name AS courseName, teacher_id AS teacherId
+        FROM courses
+        WHERE teacher_id = #{teacherId}
+    </select>
 </mapper>

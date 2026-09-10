@@ -19,18 +19,21 @@ public class PaperController {
 
     @Autowired
     private PaperService paperService;
-
     @GetMapping("/list")
-    @Operation(summary = "查询全部试卷")
+    @Operation(summary = "查看全部试卷信息")
     public Result<List<Paper>> list(){
         List<Paper> paperList = paperService.selectAll();
         return Result.success(paperList);
     }
-
     @GetMapping("/{id}")
-    @Operation(summary = "查询单份试卷")
-    public Result<Paper> getById(@PathVariable Integer id){
+    @Operation(summary = "查看单份试卷信息")
+    public Result<Paper> getById(@PathVariable Long id){
         Paper paper = paperService.selectById(id);
         return Result.success(paper);
+    }
+    @GetMapping("/course/{courseId}")
+    @Operation(summary = "根据课程ID查询试卷列表")
+    public Result<List<Paper>> getPaperListByCourseId(@PathVariable Long courseId) {
+        return paperService.getPaperListByCourseId(courseId);
     }
 }

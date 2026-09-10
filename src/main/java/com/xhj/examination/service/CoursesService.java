@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CoursesService {
     List<Courses> getCoursesByUserId(Long userId);
+
+    List<Courses> getCoursesByTeacherId(Long teacherId);
 }

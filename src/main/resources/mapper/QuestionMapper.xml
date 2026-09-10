@@ -22,15 +22,15 @@
 
     <update id="updateQuestion" parameterType="com.xhj.examination.entity.Question">
         UPDATE question
-        SET
-            content = #{content},
-            option_a = #{optionA},
-            option_b = #{optionB},
-            option_c = #{optionC},
-            option_d = #{optionD},
-            answer = #{answer},
-            score = #{score},
-            course_id = #{courseId}
+        <set>
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="a != null and a != ''">a = #{a},</if>
+            <if test="b != null and b != ''">b = #{b},</if>
+            <if test="c != null and c != ''">c = #{c},</if>
+            <if test="d != null and d != ''">d = #{d},</if>
+            <if test="answer != null and answer != ''">answer = #{answer},</if>
+            <if test="courseId != null">course_id = #{courseId}</if>
+        </set>
         WHERE id = #{id}
     </update>
 

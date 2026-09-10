@@ -21,30 +21,26 @@ public class QuestionController {
 
     @GetMapping("/course/{courseId}")
     @Operation(summary = "查询试卷题目")
-    public List<Question> getByCourse(@PathVariable Long courseId){
-        return questionService.getQuestionList(courseId);
+    public Result<List<Question>> getByCourse(@PathVariable Long courseId){
+        return Result.success(questionService.getQuestionList(courseId));
     }
 
-    @PostMapping("/add")
+    @PostMapping("/teacher/add")
     @Operation(summary = "添加新题目")
-    public String add(@RequestBody Question question){
+    public Result<Integer> add(@RequestBody Question question){
         int res = questionService.add(question);
-        if(res>0){
-            return "新增成功";
-        }else{
-            return "新增失败";
-        }
+        return res > 0 ? Result.success(res) : Result.fail(500, "新增失败");
     }
 
-    @PutMapping("/update")
+    @PutMapping("/teacher/update")
     @Operation(summary = "修改题目")
-    public Result updateQuestion(@RequestBody Question question) {
+    public Result<String> updateQuestion(@RequestBody Question question) {
         return questionService.updateQuestion(question);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/teacher/{id}")
     @Operation(summary = "删除题目")
-    public Result deleteQuestion(@PathVariable Integer id) {
+    public Result<String> deleteQuestion(@PathVariable Integer id) {
         return questionService.deleteQuestion(id);
     }
 }

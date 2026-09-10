@@ -16,4 +16,6 @@ public interface AnswerRecordService {
     List<ScoreVO> getCourseScoreList(Long courseId);
 
     List<ScoreVO> getStudentCourseScore(Long userId, Long courseId);
+
+    ScoreVO getLatestStudentCourseScore(Long userId, Long courseId);
 }

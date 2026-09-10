@@ -6,8 +6,9 @@ import java.util.Date;
 
 @Data
 public class Paper {
-    private Integer id;
+    private Long id;
     private String paperName;
     private Integer totalScore;
     private Integer duration;
+    private Long courseId;
 }

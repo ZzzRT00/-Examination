@@ -8,6 +8,7 @@ public class SubmitExamVO {
     private Long userId;
     private Long paperId;
     private List<QuestionAnswerVO> answerList;
+    private Boolean retake;
 
     @Data
     public static class QuestionAnswerVO{
