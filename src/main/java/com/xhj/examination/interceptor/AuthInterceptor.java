@@ -48,7 +48,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         Object roleObj = claims.get("role");
         String role = roleObj == null ? "" : roleObj.toString();
-        // 兼容数据库中存的中文身份：统一映射为英文角色再校验
         if ("教师".equals(role)) {
             role = "teacher";
         } else if ("学生".equals(role)) {

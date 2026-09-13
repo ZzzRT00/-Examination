@@ -42,36 +42,6 @@ public class AnswerRecordServiceImpl implements AnswerRecordService {
 
     @Override
     public Integer calcScoreAndSave(SubmitExamVO submitExamVO) {
-//        Integer paperId = submitExamVO.getPaperId();
-//        Integer userId = submitExamVO.getUserId();
-//
-//        List<PaperQuestionVO> paperQuestionVOList = paperQuestionMapper.selectQuestionWithScoreByPaperId(paperId);
-//
-//        int userScore = 0;
-//        for (SubmitExamVO.QuestionAnswerVO userAnswer : submitExamVO.getAnswerList()) {
-//            for (PaperQuestionVO q : paperQuestionVOList) {
-//                if(q.getQuestionId().equals(userAnswer.getQuestionId())){
-//                    if (Objects.equals(q.getAnswer(), userAnswer.getUserAnswer())) {
-//                        userScore += q.getScore();
-//                    }
-//                    break;
-//                }
-//            }
-//        }
-//
-//        int totalScore = paperQuestionVOList.stream()
-//                .mapToInt(q -> q.getScore() == null ? 0 : q.getScore())
-//                .sum();
-//
-//        AnswerRecord record = new AnswerRecord();
-//        record.setUserId(userId);
-//        record.setPaperId(paperId);
-//        record.setTotalScore(totalScore);
-//        record.setUserScore(userScore);
-//        answerRecordMapper.insert(record);
-//
-//        return userScore;
-        // ========== 1. 前置参数校验：避免空指针 ==========
         if (submitExamVO == null || submitExamVO.getPaperId() == null || submitExamVO.getUserId() == null) {
             throw new IllegalArgumentException("试卷ID和用户ID不能为空");
         }
@@ -82,7 +52,6 @@ public class AnswerRecordServiceImpl implements AnswerRecordService {
         Long paperId = submitExamVO.getPaperId();
         Long userId = submitExamVO.getUserId();
 
-        // ========== 防重复提交：该课程已考过且非重考，则拒绝 ==========
         Paper paper = paperMapper.selectById(paperId);
         if (paper != null && paper.getCourseId() != null) {
             Long courseId = paper.getCourseId();
@@ -98,28 +67,21 @@ public class AnswerRecordServiceImpl implements AnswerRecordService {
             return 0;
         }
 
-        // ========== 2. 核心优化：双层循环 → Map匹配，性能从O(n*m)降到O(n+m) ==========
-        // 把题目列表转成Map，key是题目ID，value是题目对象，一次遍历即可
         Map<Long, PaperQuestionVO> questionMap = paperQuestionVOList.stream()
                 .collect(Collectors.toMap(PaperQuestionVO::getQuestionId, Function.identity()));
 
         int userScore = 0;
         for (SubmitExamVO.QuestionAnswerVO userAnswer : submitExamVO.getAnswerList()) {
-            // 直接从Map取题目，不用循环遍历
             PaperQuestionVO question = questionMap.get(userAnswer.getQuestionId());
-            // 题目存在 + 答案正确 才加分
             if (question != null && Objects.equals(question.getAnswer(), userAnswer.getUserAnswer())) {
                 userScore += question.getScore();
             }
         }
 
-        // ========== 3. 简化总分计算 ==========
-        // 直接求和，score为null时默认0，和你原来的逻辑一致
         int totalScore = paperQuestionVOList.stream()
                 .mapToInt(q -> q.getScore() == null ? 0 : q.getScore())
                 .sum();
 
-        // ========== 4. 补充创建时间 ==========
         AnswerRecord record = new AnswerRecord();
         record.setUserId(userId);
         record.setPaperId(paperId);

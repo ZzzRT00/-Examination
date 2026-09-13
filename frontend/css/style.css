@@ -1,0 +1,47 @@
+* { box-sizing: border-box; }
+html, body, #app { height: 100%; margin: 0; }
+body { background: #f5f7fa; font-family: "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+
+/* 登录页 */
+.login-wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1f3b73 0%, #3a7bd5 100%);
+}
+.login-card { width: 380px; padding: 8px 12px 20px; border-radius: 10px; }
+.login-title { text-align: center; color: #303133; margin: 8px 0 24px; }
+
+/* 布局 */
+.layout { height: 100%; }
+.aside { background: #1f2d3d; }
+.aside .logo {
+  color: #fff; font-size: 16px; font-weight: 600;
+  text-align: center; padding: 20px 0 16px; letter-spacing: 1px;
+}
+.aside .el-menu { border-right: none; background: transparent; }
+.aside .el-menu-item { color: #bfcbd9; }
+.aside .el-menu-item.is-active { color: #409eff; background: #263445; }
+.aside .el-menu-item:hover { background: #263445; }
+
+.header {
+  background: #fff;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+}
+.main { overflow-y: auto; }
+
+/* 通用 */
+.mb16 { margin-bottom: 16px; }
+.muted { color: #909399; font-size: 13px; }
+.course-card { margin-bottom: 16px; }
+.course-card h3 { margin: 0 0 8px; }
+
+/* 考试页 */
+.exam-head { display: flex; align-items: center; }
+.exam-name { font-size: 17px; font-weight: 600; }
+.countdown { float: right; color: #409eff; font-weight: 600; font-size: 16px; margin-left: auto; }
+.countdown.danger { color: #f56c6c; }
+.q-title { font-size: 15px; font-weight: 500; margin: 0 0 12px; }
+.opt { display: block; margin: 8px 0; }
